@@ -1,0 +1,22 @@
+extends layout
+
+block vars
+  - var title='Domoticon Login'
+  - var description = 'Please, authenticate yourself!'
+
+block content
+  .container
+    a(href="https://github.com/ni-c/heimcontrol.js")
+    img(style="z-index: 2000; position: absolute; top: 0; right: 0; border: 0;", src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png", alt="Fork me on GitHub")
+    h1 Login Page
+    p.lead Please, authenticate yourself!
+    br
+    form(role='form', action="/login",method="post", style='max-width: 300px;')
+      .form-group
+          input.form-control(type='text', name="username", placeholder='Enter Username')
+      .form-group
+        input.form-control(type='password', name="password", placeholder='Password')
+      button.btn.btn-default(type='submit') Submit
+      &nbsp;
+      a(href='/')
+        button.btn.btn-primary(type="button") Cancel
