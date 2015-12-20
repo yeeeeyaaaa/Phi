@@ -1,0 +1,31 @@
+.container
+  .page-header
+      h1 Add a new Sensor
+      
+    .row
+      .col-sm-4
+        +panel-primary("Define the required parameters")
+          //| Define the required parameters
+    
+          form(role='form', action="/save",method="post", style='max-width: 300px;')
+            p
+              | Define a description or identifier
+            .form-group
+              input.form-control(type='text', name="description", placeholder='Description or identifier')
+            p
+              | Define IP Address
+            .form-group
+              input.form-control(type='text', name="ip", placeholder='IP Address')
+            p
+              | Define Port number
+            .form-group
+              input.form-control(type='text', name="port", placeholder='Port')
+            p
+              | Define the PIN number of the sensor in Arduino
+            .form-group
+              input.form-control(type='text', name="pin", placeholder='PIN number')
+            
+            button.btn.btn-default(type='submit') Save
+            &nbsp;
+            a(href='/')
+            button.btn.btn-primary(type="button") Cancel

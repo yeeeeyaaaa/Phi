@@ -1,0 +1,13 @@
+extends layout
+
+
+block vars
+	-var title= 'Domoticon Home'
+	-var description= 'Control your domotic house with RaspberryPi and Arduino'
+
+
+block content
+	//include table plugins
+	include ../plugins/httpRequest/views/table-plugins
+	//formulari per registrar plugins
+	include ../plugins/httpRequest/views/form-httpRequest

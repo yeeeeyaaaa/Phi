@@ -1,0 +1,8 @@
+.container.theme-showcase(role='main')
+	.page-header
+			h1 Registered sensors
+		.row
+			.col-md-6
+				//iterar per el nombre de plugins guardats
+				each sensor in items
+					+table-condensed(["#","First Name","Last Name","Username"],[["1","Mark","Otto","@mdo"],["2","Jacob","Thornton","@fat"],["3","Larry","the Bird","@twitter"]])

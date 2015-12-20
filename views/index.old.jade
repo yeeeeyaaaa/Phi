@@ -1,0 +1,56 @@
+extends layout
+
+block vars
+  - var title= 'Domoticon Home'
+  - var description= 'Control your domotic house with RaspberryPi and Arduino'
+
+
+block content
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    div.navbar.navbar-inverse.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          - if ((typeof(hide_menubar) == 'undefined') || (hide_menubar == false))
+            button.btn.btn-navbar.navigation(data-toggle="collapse", data-target=".nav-collapse")
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          a.brand(href="/") Domoticon
+          - if (typeof(hide_menubar) == 'undefined')
+            div.nav-collapse.collapse.navigation
+              ul.nav#bar-menu-left
+                li(class=(title === 'Home' ? 'active' : ''))                
+                  a(href="/")
+                    i.icon-home  
+                    | &nbsp;Home
+                li.dropdown(class=(title.indexOf('Settings')!==-1 ? 'active' : ''))                
+                  a.dropdown-toggle(href="#",data-toggle="dropdown",role="button",id="dropdown")
+                    i.icon-cogs 
+                    | &nbsp;Settings&nbsp;
+                    b.caret
+                  ul.dropdown-menu(role="menu",aria-labelledby="dropdown")
+                    li
+                      a(href="/settings")
+                        i.icon-cog &nbsp;
+                        | Domoticon Home
+                    li.divider(role="presentation")
+                    each plugin in plugins
+                      li
+                        a(href="/settings/#{plugin.id}") 
+                          - if (plugin.icon)
+                            i(class="#{plugin.icon}") &nbsp;
+                          | &nbsp;#{plugin.name}
+              ul.nav.pull-right#bar-menu-right
+                li
+                  a.btn-logout(href="/logout") 
+                    i.icon-signout &nbsp;
+                    | Logout
+    
+          p You are currently logged in as #{user.username}
+          a(href="/logout") Logout
+  h1 Welcome to Domoticon
+  p.lead Your smart home everywhere        

@@ -57,6 +57,34 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+router.get('/settings', function(req, res) {
+    if (req.user == undefined)
+        res.redirect('/');
+    res.render('settings', {
+        title: 'Domoticon settings',
+        user: req.user
+    });
+});
+
+router.post('/settings/save', function(req, res) {
+    /*Account.register(new Account({
+        username: req.body.username
+    }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render("register", {
+                info: "Sorry. That username already exists. Try again."
+            });
+        }
+
+        passport.authenticate('local')(req, res, function() {
+            res.redirect('/');
+        });
+    });*/
+    //guardar les dades del plugin a mongo
+    //s'hauria de mantindre en la mateixa pagina però llençar event per recarregar la taula superior
+});
+
+
 router.get('/ping', function(req, res) {
     res.status(200).send("pong!");
 });
