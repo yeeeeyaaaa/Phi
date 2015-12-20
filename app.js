@@ -10,7 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 var pluginHelper = require('utils');
 
 var app = express();
@@ -56,6 +56,7 @@ app.set('plugins', pluginList);
 
 app.use('/', routes);
 //app.use('/users', users);
+//app.get('settings', routes.settings);
 
 // passport config
 var Account = require('./models/account');

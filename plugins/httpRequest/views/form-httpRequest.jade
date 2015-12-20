@@ -7,7 +7,7 @@
         +panel-primary("Define the required parameters")
           //| Define the required parameters
     
-          form(role='form', action="/save",method="post", style='max-width: 300px;')
+          form(role='form', action="/settings/save",method="post", style='max-width: 300px;')
             p
               | Define a description or identifier
             .form-group
@@ -24,7 +24,11 @@
               | Define the PIN number of the sensor in Arduino
             .form-group
               input.form-control(type='text', name="pin", placeholder='PIN number')
-            
+            p
+              | Define the mesure of the pin (Analog or Digital)
+            .form-group
+              input.form-control(type='text', name="mesure", placeholder='Analog or Digital')
+
             button.btn.btn-default(type='submit') Save
             &nbsp;
             a(href='/')

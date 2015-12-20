@@ -6,7 +6,7 @@
 }
 
 .userName {
-    color: #81BEF7;
+    color: #81BEF7 !important;
 }
 
 @media (min-width: 979px) {

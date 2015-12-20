@@ -1,8 +1,36 @@
 .container.theme-showcase(role='main')
 	.page-header
 			h1 Registered sensors
-		.row
-			.col-md-6
-				//iterar per el nombre de plugins guardats
+	if items.length !== 0
+		table.table.table-striped
+			thead
+				tr
+					th #
+					th IP Address
+					th Port
+					th Description
+					th Pin
+					th Mesure
+					th Actions
+			tbody
 				each sensor in items
-					+table-condensed(["#","First Name","Last Name","Username"],[["1","Mark","Otto","@mdo"],["2","Jacob","Thornton","@fat"],["3","Larry","the Bird","@twitter"]])
+					tr
+						td Blah
+						td 
+							| #{sensor.ip}
+						td 
+							| #{sensor.port}
+						td 
+							| #{sensor.description}
+						td 
+							| #{sensor.pin}
+						td 
+							| #{sensor.mesure}
+						td
+							+icon-success("plus")
+							&nbsp;
+							+icon-danger("trash")
+							&nbsp;
+							+icon-info("cog")
+	else
+				p.lead No sensor registered
