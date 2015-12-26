@@ -16,6 +16,10 @@ block content
 		.page-header
 			h1 Buttons
 		p
+			+icon-info("transfer")
+			a.btn.btn-danger(class="glyphicon glyphicon-trash",href="/settings/delete/") 
+			&nbsp; 
+			a.btn.btn-info(class="glyphicon glyphicon-cog",data-toggle="modal",data-target="#myModal")
 			button.btn.btn-lg.btn-default(type='button') Default
 			button.btn.btn-lg.btn-primary(type='button') Primary
 			button.btn.btn-lg.btn-success(type='button') Success

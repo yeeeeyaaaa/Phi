@@ -3,6 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var Sensor = require('../models/sensorHttp');
 var router = express.Router();
+var SensorCtrl = require('../controllers/sensorHttpController');
 
 //module.exports = function(app) {
 
@@ -62,11 +63,11 @@ router.get('/logout', function(req, res) {
 router.get('/settings', function(req, res) {
     if (req.user === undefined)
         res.redirect('/');
-    /*res.render('settings', {
+    res.render('settings', {
         title: 'Domoticon settings',
         user: req.user
-    });*/
-    settings(req, res);
+    });
+    //settings(req, res);
 });
 
 
@@ -154,78 +155,11 @@ function settings(req, res) {
     }*/
 
 
-
-/**
- * Render the settings page
- * 
- * @method renderSettings
- * @param {Object} req The Request
- * @param {Object} res The Reponse
- * @param {Object options Additional vars for the settings view
- */
-function renderSettings(req, res, options) {
-    req.app.get('db').collection('User', function(err, collection) {
-        collection.find({}).toArray(function(err, users) {
-            var vars = {
-                title: 'Settings',
-                themes: fs.readdirSync(req.app.get('theme folder')),
-                users: users
-            };
-
-            if (options) {
-                for (var key in options) {
-                    vars[key] = options[key];
-                }
-            }
-
-            return res.render('settings', vars);
-        });
-    });
-}
-
-
-router.post('/settings/save', function(req, res) {
-    var sensorArduino = new Sensor({
-        description: req.body.description,
-        ip: req.body.ip,
-        port: req.body.port,
-        pin: req.body.pin,
-        mesure: req.body.mesure
-    });
-    /*Account.register(new Account({
-        username: req.body.username
-    }), req.body.password, function(err, account) {
-        if (err) {
-            return res.render("register", {
-                info: "Sorry. That username already exists. Try again."
-            });
-        }
-
-        passport.authenticate('local')(req, res, function() {
-            res.redirect('/');
-        });
-    });*/
-    //guardar les dades del plugin a mongo
-    sensorArduino.save(function(err) {
-        if (err) throw err;
-
-        console.log('Plugins sensor saved successfully!');
-    });
-    Sensor.find({}, function(err, sensors) {
-        if (err) throw err;
-        console.log(sensors);
-        /*req.app.get('jade').renderFile(__dirname + '/../plugins/httpRequest/views/table-plugins.jade', {
-            items: sensors
-        }, function(err, html) {
-            if (!err) {*/
-        res.render('settings', {
-            title: 'Domoticon settings',
-            user: req.user,
-            items: sensors
-        });
-    });
-    //s'hauria de mantindre en la mateixa pagina però llençar event per recarregar la taula superior
-});
+router.post('/settings/save', SensorCtrl.addSensor);
+router.get('/settings/list', SensorCtrl.findAllSensors);
+router.get('/settings/update/:id', SensorCtrl.updateSensor);
+router.get('/settings/delete/:id', SensorCtrl.deleteSensor);
+router.get('/settings/:id', SensorCtrl.findById);
 
 
 router.get('/ping', function(req, res) {

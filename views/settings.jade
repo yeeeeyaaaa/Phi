@@ -7,7 +7,55 @@ block vars
 
 
 block content
+
+	script(src="/javascripts/settings.js")
+
 	//include table plugins
-	include ../plugins/httpRequest/views/table-plugins
-	//formulari per registrar plugins
-	include ../plugins/httpRequest/views/form-httpRequest
+	//include ../plugins/httpRequest/views/table-plugins
+	.container.theme-showcase(role='main')
+		.page-header
+			h1 Registered sensors
+			#sensorList
+				table.table.table-striped
+					thead
+						tr
+							th #
+							th IP Address
+							th Port
+							th Description
+							th Pin
+							th Mesure
+							th Actions
+					tbody
+						
+	.container
+		button.btn.btn-primary#AddSensorButton(data-toggle="modal") Add a new Sensor
+		.row
+		.col-sm-4
+		+modal("Define the required parameters","myModal")
+			form(role='form', action="/settings/save",method="post", style='max-width: 300px;')
+			p
+				| Define a description or identifier
+			.form-group
+				input.form-control(type='text', id="description", name="description", placeholder='Description or identifier')
+			p
+				| Define IP Address
+			.form-group
+				input.form-control(type='text', id="ip", name="ip", placeholder='IP Address')
+			p
+				| Define Port number
+			.form-group
+				input.form-control(type='text', id="port", name="port", placeholder='Port')
+			p
+				| Define the PIN number of the sensor in Arduino
+			.form-group
+				input.form-control(type='text', id="pin", name="pin", placeholder='PIN number')
+			p
+				| Define the mesure of the pin (Analog or Digital)
+			.form-group
+				input.form-control(type='text', id="mesure", name="mesure", placeholder='Analog or Digital')
+
+			button.btn.btn-default(type='submit') Save
+			&nbsp;
+			a(href='/')
+			button.btn.btn-primary(type="button") Cancel
