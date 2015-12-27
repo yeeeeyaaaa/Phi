@@ -1,7 +1,14 @@
 var sensorListData = [];
 
 $(document).ready(function() {
-    // Aquí añadiremos nuestro código
+    //*******************************
+    // Loading div animation
+    $(document).ajaxStart(function() {
+        $("#progressBar").css("display", "block");
+    });
+    $(document).ajaxComplete(function() {
+        $("#progressBar").css("display", "none");
+    });
     populateTable();
     window.setInterval(function() {
         document.location.reload(true);

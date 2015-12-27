@@ -1,0 +1,12 @@
+extends layout
+
+block content
+
+	script(src="/javascripts/monitor.js")
+
+	h2 Monitor
+	#tablist
+	#progressBar
+		+progress-bar-striped(100)
+
+	#tabContent

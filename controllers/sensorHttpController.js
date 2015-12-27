@@ -11,6 +11,19 @@ exports.findAllSensors = function(req, res) {
     });
 };
 
+exports.findAllNamesSensors = function(req, res) {
+    var namesSensors = [];
+    Sensor.find(function(err, sensors) {
+        if (err) res.status(500).send(err.message);
+
+        console.log('GET /sensors ' + sensors);
+        for (sensor in sensors) {
+            namesSensors.push(sensor.description);
+        }
+        return namesSensors;
+    });
+};
+
 //GET - Return a Sensors with specified ID
 exports.findById = function(req, res) {
     Sensor.findById(req.params.id, function(err, sensor) {

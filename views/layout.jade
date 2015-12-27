@@ -43,7 +43,7 @@ include ../node_modules/jade-bootstrap/components/bootswatch
 doctype html
 html
 	head
-		title Domoticon | #{title}
+		title #{title}
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		block styles
 			link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
@@ -73,11 +73,13 @@ html
 					a.navbar-brand.userName(href='/') Domoticon
 				#navbar.navbar-collapse.collapse
 					ul.nav.navbar-nav
-						li.active
+						li(class= (title.indexOf('Home') > 0 ? 'active' : ''))
 							a(href='/') Home
-						li
+						li(class= (title.indexOf('monitor') > 0 ? 'active' : ''))
+							a(href='/monitor') Monitor
+						li(class= (title.indexOf('settings') > 0 ? 'active' : ''))
 							a(href='/settings') Settings
-						li
+						li(class= (title.indexOf('contact') > 0 ? 'active' : ''))
 							a(href='#contact') Contact
 						li.dropdown
 							if (user)

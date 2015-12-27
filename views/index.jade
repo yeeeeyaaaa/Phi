@@ -7,12 +7,16 @@ block vars
 
 
 block content
+	script(src="/javascripts/index.js")
+
 	.container.theme-showcase(role='main')
 		// Main jumbotron for a primary marketing message or call to action
 		.jumbotron
 			h1 Welcome to Domoticon
 			p
 				| Your smart home everywhere.
+
+		canvas#homeCanvas
 		.page-header
 			h1 Buttons
 		p

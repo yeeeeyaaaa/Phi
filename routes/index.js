@@ -70,6 +70,14 @@ router.get('/settings', function(req, res) {
     //settings(req, res);
 });
 
+router.get('/monitor', function(req, res) {
+    if (req.user === undefined)
+        res.redirect('/');
+    res.render('monitor', {
+        title: 'Domoticon monitor sensors',
+        user: req.user
+    });
+});
 
 /**
  * GET /settings
