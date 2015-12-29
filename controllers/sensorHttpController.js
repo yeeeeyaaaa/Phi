@@ -89,7 +89,9 @@ exports.addSensor = function(req, res) {
     });
     Sensor.find({}, function(err, sensors) {
         if (err) throw err;
-        res.render('table-plugins', {
+        res.render('settings', {
+            title: 'Domoticon settings',
+            user: req.user,
             items: sensors
         });
     });
@@ -111,7 +113,9 @@ exports.updateSensor = function(req, res) {
         });
         Sensor.find({}, function(err, sensors) {
             if (err) throw err;
-            res.render('table-plugins', {
+            res.render('settings', {
+                title: 'Domoticon settings',
+                user: req.user,
                 items: sensors
             });
         });
@@ -128,7 +132,9 @@ exports.deleteSensor = function(req, res) {
         })
         Sensor.find({}, function(err, sensors) {
             if (err) throw err;
-            res.render('table-plugins', {
+            res.render('settings', {
+                title: 'Domoticon settings',
+                user: req.user,
                 items: sensors
             });
         });

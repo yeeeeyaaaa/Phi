@@ -43,6 +43,7 @@ include ../node_modules/jade-bootstrap/components/bootswatch
 doctype html
 html
 	head
+		block vars
 		title #{title}
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		block styles
@@ -60,6 +61,14 @@ html
 			link(rel='apple-touch.icon', sizes='114x114', href='/apple-touch.icon-114x114.png')
 			link(rel='apple-touch.icon', sizes='144x144', href='/apple-touch.icon-144x144.png')
 			link(rel='stylesheet', href='/stylesheets/style.css')
+
+
+
+		block scripts
+			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+			//script(src="js/jquery.min.js")
+			//script(src="js/bootstrap.min.js")
 	body
 		//Fixed navbar
 		nav.navbar.navbar-inverse.navbar-fixed-top
@@ -73,13 +82,17 @@ html
 					a.navbar-brand.userName(href='/') Domoticon
 				#navbar.navbar-collapse.collapse
 					ul.nav.navbar-nav
-						li(class= (title.indexOf('Home') > 0 ? 'active' : ''))
+						li
+							//li(class= (title.indexOf('Home') > 0 ? 'active' : ''))
 							a(href='/') Home
-						li(class= (title.indexOf('monitor') > 0 ? 'active' : ''))
+						li
+							//li(class= (title.indexOf('monitor') > 0 ? 'active' : ''))
 							a(href='/monitor') Monitor
-						li(class= (title.indexOf('settings') > 0 ? 'active' : ''))
+						li
+							//li(class= (title.indexOf('settings') > 0 ? 'active' : ''))
 							a(href='/settings') Settings
-						li(class= (title.indexOf('contact') > 0 ? 'active' : ''))
+						li
+							//li(class= (title.indexOf('contact') > 0 ? 'active' : ''))
 							a(href='#contact') Contact
 						li.dropdown
 							if (user)
@@ -110,12 +123,6 @@ html
 									li
 										a(href='/register') Register
 
-
-	block scripts
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
-		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-		//script(src="js/jquery.min.js")
-		//script(src="js/bootstrap.min.js")
 				
 	block content
 

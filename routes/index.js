@@ -1,9 +1,11 @@
 var express = require('express');
 var passport = require('passport');
+var http = require('http');
 var Account = require('../models/account');
 var Sensor = require('../models/sensorHttp');
 var router = express.Router();
 var SensorCtrl = require('../controllers/sensorHttpController');
+var DataCtrl = require('../controllers/dataController');
 
 //module.exports = function(app) {
 
@@ -73,100 +75,105 @@ router.get('/settings', function(req, res) {
 router.get('/monitor', function(req, res) {
     if (req.user === undefined)
         res.redirect('/');
+
     res.render('monitor', {
         title: 'Domoticon monitor sensors',
         user: req.user
     });
 });
 
-/**
- * GET /settings
- * 
- * @method settings
- * @param {Object} req The request
- * @param {Object} res The response
- * @param {Object} next Next route
- */
+function isAutenticated(req, res) {
+    if (req.user === undefined)
+        res.redirect('/');
+    return true;
+}
+
 function settings(req, res) {
-
-    var pluginList = [];
-
-    Sensor.find({}, function(err, sensors) {
-        if (err) throw err;
-        console.log(sensors);
-        /*req.app.get('jade').renderFile(__dirname + '/../plugins/httpRequest/views/table-plugins.jade', {
-            items: sensors
-        }, function(err, html) {
-            if (!err) {*/
+    if (isAutenticated(req, res)) {
+        var sensors = SensorCtrl.findAllSensors(req, res);
+        /*console.log("sensors " + sensors);
+        for (sensor in sensors) {
+            console.log("sensor " + sensor);
+        }
         res.render('settings', {
-            //content: html,
-            //plugin: plugin.id,
-            //title: plugin.name + ' Settings',
             title: 'Domoticon settings',
             user: req.user,
             items: sensors
+        });*/
+    }
+}
+
+function addSensor(req, res) {
+    if (isAutenticated(req, res)) {
+        var sensors = SensorCtrl.addSensor(req, res);
+        /*res.render('settings', {
+            title: 'Domoticon settings',
+            user: req.user,
+            items: sensors
+        });*/
+    }
+}
+
+function listSensor(req, res) {
+    if (isAutenticated(req, res)) {
+        var sensors = SensorCtrl.findAllSensors(req, res);
+        /*res.render('settings', {
+            title: 'Domoticon settings',
+            user: req.user,
+            items: sensors
+        });*/
+    }
+}
+
+function updateSensor(req, res) {
+    if (isAutenticated(req, res)) {
+        var sensors = SensorCtrl.updateSensor(req, res);
+        /*res.render('settings', {
+            title: 'Domoticon settings',
+            user: req.user,
+            items: sensors
+        });*/
+    }
+}
+
+function deleteSensor(req, res) {
+    if (isAutenticated(req, res)) {
+        var sensors = SensorCtrl.deleteSensor(req, res);
+        /*res.render('settings', {
+            title: 'Domoticon settings',
+            user: req.user,
+            items: sensors
+        });*/
+    }
+}
+
+function connectArduino(req, res) {
+    var options = {
+        host: req.query.host,
+        port: req.query.port,
+        path: req.query.path
+    };
+
+    http.get(options, function(resp) {
+        resp.on('data', function(chunk) {
+            var body = JSON.parse(chunk);
+            res.status(200).send(body);
         });
-        /*} else {
-            console.log(err);
-            return res.render(500, '500', {
-                title: '500 Internal Server Error'
-            });
-        }*/
+    }).on("error", function(e) {
+        console.log("Got error: " + e.message);
+        res.status(500).send(e.message);
     });
 }
 
-/*req.app.get('plugins').forEach(function(plugin) {
-            pluginList.push(plugin.id);
-        });
-        if (pluginList.indexOf(req.params.plugin) >= 0) {
-            req.app.get('plugins').forEach(function(plugin) {
-                if (plugin.id == req.params.plugin) {
-                    req.app.get('db').collection(plugin.collection, function(err, collection) {
-                        collection.find({}).toArray(function(err, items) {
-                            function render(items, meta) {
-                                var meta = meta || {};
-                                req.app.get('jade').renderFile(__dirname + '/../plugins/httpRequest/views/table-plugins.jade', {
-                                    items: items,
-                                    meta: meta
-                                }, function(err, html) {
-                                    if (!err) {
-                                        return res.render('settings', {
-                                            content: html,
-                                            plugin: plugin.id,
-                                            title: plugin.name + ' Settings'
-                                        });
-                                    } else {
-                                        console.log(err);
-                                        return res.render(500, '500', {
-                                            title: '500 Internal Server Error'
-                                        });
-                                    }
-                                });
-                            }
-                            // If the plugin has a beforeRender() method, call it
-                            if (plugin.beforeRender) {
-                                plugin.beforeRender(items, function(err, result, meta) {
-                                    render(result, meta);
-                                });
-                            } else {
-                                render(items);
-                            }
-                        });
-                    });
-                }
-            });
-        } else {
-            return next();
-        }
-    } else {
-        renderSettings(req, res);
-    }*/
+router.get('/apiArduino/get', connectArduino);
+router.post('/apiArduino/get', connectArduino);
 
+router.post('/data/add', DataCtrl.addData);
 
-router.post('/settings/save', SensorCtrl.addSensor);
-router.get('/settings/list', SensorCtrl.findAllSensors);
-router.get('/settings/update/:id', SensorCtrl.updateSensor);
-router.get('/settings/delete/:id', SensorCtrl.deleteSensor);
+router.post('/settings/save', addSensor);
+router.get('/settings/list', listSensor);
+router.get('/settings/update/:id', updateSensor);
+router.get('/settings/delete/:id', deleteSensor);
 router.get('/settings/:id', SensorCtrl.findById);
 
 
@@ -175,7 +182,3 @@ router.get('/ping', function(req, res) {
 });
 
 module.exports = router;
-/*var exports = router;
-
-return exports;*/
-//}

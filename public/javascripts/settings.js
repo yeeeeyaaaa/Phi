@@ -25,29 +25,35 @@ function populateTable() {
             // For each item in our JSON, add a table row and cells to the content string
             $.each(data, function() {
                 tableContent += '<tr>';
-                var url = 'http://' + this.ip + ':' + this.port + '/' + this.mesure.toLowerCase() + '/' + this.pin;
-                try {
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        async: false,
-                        success: function(body, status) {
-                            //body = JSON.parse(body);
-                            // logic used to compare search results with the input from user
-                            if (status !== 200) {
-                                tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
-                            } else {
-                                tableContent += '<td><span class="glyphicon text-info glyphicon-transfer"</span></td>';
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
-                        }
-                    });
-                } catch (e) {
-                    console.log('Error ' + e);
-                    tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
-                }
+                //var url = 'http://' + this.ip + ':' + this.port + '/arduino/' + this.mesure.toLowerCase() + '/' + this.pin;
+                //console.log("trying to connect to " + url);
+                // try {
+                //     $.ajax({
+                //         type: "GET",
+                //         url: url,
+                //         async: false,
+                //         //crossDomain: true,
+                //         dataType: "jsonp",
+                //         //jsonpCallback: 'temperature',
+                //         jsonp: 'callback',
+                //         success: function(body, status) {
+                //             console.log("body" + body);
+                //             //body = JSON.parse(body);
+                //             // logic used to compare search results with the input from user
+                //             if (status !== 200) {
+                //                 tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
+                //             } else {
+                //                 tableContent += '<td><span class="glyphicon text-info glyphicon-transfer"</span></td>';
+                //             }
+                //         },
+                //         error: function(xhr, status, error) {
+                //             tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
+                //         }
+                //     });
+                // } catch (e) {
+                //     console.log('Error ' + e);
+                //     tableContent += '<td><span class="glyphicon text-danger glyphicon-alert"</span></td>';
+                // }
                 tableContent += '<td>' + this.ip + '</td>';
                 tableContent += '<td>' + this.port + '</td>';
                 tableContent += '<td>' + this.description + '</td>';

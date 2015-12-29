@@ -5,7 +5,7 @@ $(document).ready(function() {
     var H = window.innerHeight;
     canvas.width = W;
     canvas.height = H;
-    canvas.onmousedown = handleMousedown;
+    //canvas.onmousedown = handleMousedown;
     if (canvas.getContext) {
 
         var myRect = [];
