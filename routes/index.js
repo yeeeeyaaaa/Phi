@@ -148,15 +148,29 @@ function deleteSensor(req, res) {
 }
 
 function connectArduino(req, res) {
+    var pathRec;
+    var desc = req.query.description.toLowerCase();
+    console.log(desc + " index of " + desc.indexOf("light"));
+    if (desc.indexOf('temp') > 0) {
+        pathRec = "/arduino/temperature";
+    } else if (desc.indexOf('light') > 0) {
+        pathRec = "/arduino/light";
+    } else if (desc.indexOf('pir') > 0) {
+        pathRec = "/arduino/PIR";
+    } else {
+        pathRec = req.query.path;
+    }
+    console.log(pathRec);
     var options = {
         host: req.query.host,
         port: req.query.port,
-        path: req.query.path
+        path: pathRec
     };
 
     http.get(options, function(resp) {
         resp.on('data', function(chunk) {
             var body = JSON.parse(chunk);
+            console.log("chunk " + chunk);
             res.status(200).send(body);
         });
     }).on("error", function(e) {

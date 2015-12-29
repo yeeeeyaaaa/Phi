@@ -57,6 +57,7 @@ function getValueFromArduino(id) {
             data: {
                 "host": sensor.ip,
                 "port": sensor.port,
+                "description": sensor.description,
                 "path": '/arduino/' + sensor.mesure.toLowerCase() + '/' + sensor.pin
             },
             async: false,
