@@ -30,7 +30,9 @@ function populateTabs() {
             });
             tabsContent += '</ul>';
         } else {
-            tabsContent += 'p.lead No sensor registered';
+            tabsContent += '<div role="alert" class="alert alert-warning"><span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>';
+            tabsContent += ' <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true"> ×</span></button>No sensor registered';
+            tabsContent += '</div>';
         }
         // Inject the whole content string into our existing HTML table
         $('#tablist').html(tabsContent);
@@ -76,14 +78,14 @@ function getValueFromArduino(id) {
             error: function(xhr, status, error) {
                 console.log('Error ' + e);
                 tabsContent += '<div role="alert" class="alert alert-dismissible alert-danger"><span aria-hidden="true" class="glyphicon glyphicon-remove-sign"></span>';
-                tabsContent += '<button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true"> ×</span></button>Error, couldn\'t establish the connection';
+                tabsContent += ' <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true"> ×</span></button>Error, couldn\'t establish the connection';
                 tabsContent += '</div>';
             }
         });
     } catch (e) {
         console.log('Error ' + e);
         tabsContent += '<div role="alert" class="alert alert-dismissible alert-danger"><span aria-hidden="true" class="glyphicon glyphicon-remove-sign"></span>';
-        tabsContent += '<button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true"> ×</span></button>Error, couldn\'t establish the connection';
+        tabsContent += ' <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true"> ×</span></button>Error, couldn\'t establish the connection to apiArduino';
         tabsContent += '</div>';
     }
     // Inject the whole content string into our existing HTML table

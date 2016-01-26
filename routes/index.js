@@ -6,17 +6,23 @@ var Sensor = require('../models/sensorHttp');
 var router = express.Router();
 var SensorCtrl = require('../controllers/sensorHttpController');
 var DataCtrl = require('../controllers/dataController');
+var OrviboCtrl = require('../controllers/orviboSocketsController');
 
 //module.exports = function(app) {
 
 router.get('/', function(req, res) {
+    if (req.user !== undefined){
+        OrviboCtrl.subscribeOrvibo();
+        console.log('sortim de definir els orvibo');
+    
+    }
     var pluginList = [];
     pluginList.push({
         id: "1",
         name: "Arduino",
         icon: "arduino.jpg"
     });
-
+    
     res.render('index', {
         user: req.user,
         title: 'Domoticon Home',
@@ -79,6 +85,19 @@ router.get('/monitor', function(req, res) {
     res.render('monitor', {
         title: 'Domoticon monitor sensors',
         user: req.user
+    });
+});
+
+router.get('/sockets', function(req, res) {
+    if (req.user === undefined)
+        res.redirect('/');
+
+    var oriviboSockets = OrviboCtrl.getDevices();
+
+    res.render('sockets', {
+        title: 'Domoticon manage Orvibo sockets',
+        user: req.user,
+        sockets: oriviboSockets
     });
 });
 
@@ -178,6 +197,12 @@ function connectArduino(req, res) {
         res.status(500).send(e.message);
     });
 }
+
+function getDevices(req, res){
+    return OrviboCtrl.getDevices();
+}
+
+router.get('/apiOrvibo/getDevices', getDevices);
 
 router.get('/apiArduino/get', connectArduino);
 router.post('/apiArduino/get', connectArduino);

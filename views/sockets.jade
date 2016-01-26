@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+	script(src="/javascripts/sockets.js")
+
+	h2 Orvibo Sockets
+	#orviboList
+		table.table.table-striped
+			thead
+				tr
+					th Orvibo Name
+					th State
+			tbody
+
+	#progressBar
+		+progress-bar-striped(100)
+
+	#tabContent

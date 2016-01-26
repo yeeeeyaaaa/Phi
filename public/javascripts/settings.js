@@ -65,7 +65,7 @@ function populateTable() {
 
             });
         } else {
-            tableContent += 'p.lead No sensor registered';
+            tableContent += '<p class="lead">No sensor registered</p>';
         }
 
         // Inject the whole content string into our existing HTML table
